@@ -15,7 +15,7 @@ namespace InterClock.Connect.Data.Repos
 {
 	public class ApiRepo
 	{
-		private const string ApiUrl = "http://10.0.1.7:3000/";
+		private const string ApiUrl = "http://127.0.0.1:3000/";
 		private IDeviceProvider deviceInfo;
 
 		private const string GetStationUrl = "station";
@@ -117,7 +117,6 @@ namespace InterClock.Connect.Data.Repos
 		public async Task<ApiResult> Play(int stationId){
 			using (var client = new HttpClient ()) {
 				client.BaseAddress = new Uri (ApiUrl);
-				var request = string.Format (PlayStation, stationId);
 				var data = new List<KeyValuePair<string, string>> {
 					new KeyValuePair<string, string>("deviceId", deviceInfo.DeviceId),
 					new KeyValuePair<string, string>("stationId", stationId.ToString())

@@ -7,6 +7,7 @@ namespace InterClock.Connect.Data.Models
 	public class Alarm
 	{
 		public Guid Id {get; set;}
+
 		public string Name {get;set;}
 
 		[JsonProperty("minute")]
@@ -17,15 +18,41 @@ namespace InterClock.Connect.Data.Models
 
 		[JsonProperty("beginDay")]
 		public AlarmSchedule BeginDay { get; set; }
+
 		[JsonProperty("endDay")]
 		public AlarmSchedule EndDay {get;set;}
+
 		[JsonProperty("stationId")]
 		public int StationId {get;set;}
+
+		public TimeSpan AlarmSpan { get; set; }
+
 		public Alarm ()
 		{
 		}
 
+		private string alarmString;
+		public string AlarmString
+		{
+			get{
+				if (String.IsNullOrEmpty (alarmString)) {
+					var dayString = string.Empty;
+					if (BeginDay == EndDay)
+						dayString = BeginDay.ToString ();
+					else if (BeginDay == AlarmSchedule.Weekdays) {
+						dayString = "Weekdays (Monday - Friday)";
+					} else if (BeginDay == AlarmSchedule.Weekends) {
+						dayString = "Weekends (Saturday and Sunday)";
+					} else {
+						dayString = BeginDay.ToString() + " - " + EndDay.ToString();
+					}
 
+					alarmString = string.Format ("{0}:{1} {2}", Hour, Minute, dayString);
+				}
+				return alarmString;
+			}
+
+		}
 
 		public IEnumerable<KeyValuePair<string, string>> ToFormData (){
 			return new List<KeyValuePair<string, string>> {

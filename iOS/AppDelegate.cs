@@ -7,6 +7,7 @@ using MonoTouch.UIKit;
 
 using Xamarin.Forms;
 using InterClock.Connect.Data;
+using InterClock.Connect.Data.Pages;
 
 namespace InterClock.Connect.iOS
 {
@@ -21,7 +22,7 @@ namespace InterClock.Connect.iOS
 
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			
-			window.RootViewController = MyPage.Create().CreateViewController ();
+			window.RootViewController = (new NavigationPage(new AlarmEdit())).CreateViewController ();
 			window.MakeKeyAndVisible ();
 			
 			return true;
