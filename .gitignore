@@ -3,6 +3,10 @@
 *.ko
 *.obj
 *.elf
+[Bb]in
+[Oo]bj
+[Rr]elease
+[Pp]ackages
 
 # Precompiled Headers
 *.gch

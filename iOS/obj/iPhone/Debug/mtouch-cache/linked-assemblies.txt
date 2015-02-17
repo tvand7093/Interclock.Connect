@@ -1,0 +1,16 @@
+/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/obj/iPhone/Debug/mtouch-cache/Link/Newtonsoft.Json.dll
+/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/obj/iPhone/Debug/mtouch-cache/Link/System.dll
+/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/obj/iPhone/Debug/mtouch-cache/Link/System.Xml.dll
+/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/obj/iPhone/Debug/mtouch-cache/Link/Mono.Dynamic.Interpreter.dll
+/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/obj/iPhone/Debug/mtouch-cache/Link/Microsoft.CSharp.dll
+/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/obj/iPhone/Debug/mtouch-cache/Link/System.Xml.Linq.dll
+/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/obj/iPhone/Debug/mtouch-cache/Link/System.Core.dll
+/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/obj/iPhone/Debug/mtouch-cache/Link/monotouch.dll
+/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/obj/iPhone/Debug/mtouch-cache/Link/InterClockConnectiOS.exe
+/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/obj/iPhone/Debug/mtouch-cache/Link/Xamarin.Forms.Platform.iOS.Classic.dll
+/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/obj/iPhone/Debug/mtouch-cache/Link/InterClock.Connect.Data.dll
+/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/obj/iPhone/Debug/mtouch-cache/Link/Mono.CSharp.dll
+/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/obj/iPhone/Debug/mtouch-cache/Link/System.Net.Http.dll
+/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/obj/iPhone/Debug/mtouch-cache/Link/Xamarin.Forms.Core.dll
+/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/obj/iPhone/Debug/mtouch-cache/Link/mscorlib.dll
+/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/obj/iPhone/Debug/mtouch-cache/Link/System.Runtime.Serialization.dll

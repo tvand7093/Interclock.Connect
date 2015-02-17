@@ -1,0 +1,35 @@
+# Version: 8.4.0.47 (7244769)
+# [first argument, ignore] # /Users/tylervanderhoef/Projects/InterClock.Connect/iOS/bin/iPhone/Debug/mtouch.exe
+/Library/Frameworks/Xamarin.iOS.framework/Versions/8.4.0.47/bin/mtouch \
+	-sdkroot \
+	/Applications/Xcode.app/Contents/Developer \
+	--cache \
+	/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/obj/iPhone/Debug/mtouch-cache \
+	--nomanifest \
+	--nosign \
+	-dev \
+	/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/bin/iPhone/Debug/InterClockConnectiOS.app \
+	-r \
+	/Users/tylervanderhoef/Projects/InterClock.Connect/InterClock.Connect.Data/bin/Debug/InterClock.Connect.Data.dll \
+	-r \
+	/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/2.1/System.dll \
+	-r \
+	/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/2.1/System.Xml.dll \
+	-r \
+	/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/2.1/System.Core.dll \
+	-r \
+	/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/2.1/monotouch.dll \
+	-r \
+	/Users/tylervanderhoef/Projects/InterClock.Connect/packages/Xamarin.Forms.1.3.2.6316/lib/MonoTouch10/Xamarin.Forms.Platform.iOS.Classic.dll \
+	-r \
+	/Users/tylervanderhoef/Projects/InterClock.Connect/packages/Xamarin.Forms.1.3.2.6316/lib/MonoTouch10/Xamarin.Forms.Core.dll \
+	-r \
+	/Users/tylervanderhoef/Projects/InterClock.Connect/packages/Xamarin.Forms.1.3.2.6316/lib/MonoTouch10/Xamarin.Forms.Xaml.dll \
+	-debug \
+	-linksdkonly \
+	-sdk \
+	8.1 \
+	-targetver \
+	7.0 \
+	--abi=armv7 \
+	/Users/tylervanderhoef/Projects/InterClock.Connect/iOS/bin/iPhone/Debug/InterClockConnectiOS.exe \
