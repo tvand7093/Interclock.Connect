@@ -47,6 +47,8 @@
     <Compile Include="Pages\StationSearch.cs" />
     <Compile Include="Models\Extensions.cs" />
     <Compile Include="Pages\AlarmScheduleSelection.cs" />
+    <Compile Include="Controls\RightDisclosureCell.cs" />
+    <Compile Include="Controls\PickerCell.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />

@@ -6,8 +6,10 @@ namespace InterClock.Connect.Data.Models
 {
 	public class Alarm
 	{
+		[JsonProperty("alarmId")]
 		public Guid Id {get; set;}
 
+		[JsonProperty("name")]
 		public string Name {get;set;}
 
 		[JsonProperty("minute")]
@@ -59,6 +61,7 @@ namespace InterClock.Connect.Data.Models
 				new KeyValuePair<string, string>("hour", this.Hour.ToString()),
 				new KeyValuePair<string, string>("minute", this.Minute.ToString()),
 				new KeyValuePair<string, string>("stationId", this.StationId.ToString()),
+				new KeyValuePair<string, string>("deviceId", "TYLERS PHONE"),
 				new KeyValuePair<string, string>("beginDay", ((int)this.BeginDay).ToString()),
 				new KeyValuePair<string, string>("endDay", ((int)this.EndDay).ToString()),
 			};

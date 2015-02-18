@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using System.Diagnostics;
 using InterClock.Connect.Data.Models;
 using InterClock.Connect.Data.Repos;
+using InterClock.Connect.Data.Controls;
 
 namespace InterClock.Connect.Data.Pages
 {
@@ -15,7 +16,6 @@ namespace InterClock.Connect.Data.Pages
 		{
 			Title = "Alarm info";
 			viewModel = vm ?? new Alarm ();
-
 			ToolbarItems.Add(new ToolbarItem("Save", string.Empty, async () => {
 				Focus();
 				//click the save button.
@@ -34,7 +34,7 @@ namespace InterClock.Connect.Data.Pages
 			};
 			name.SetBinding (Entry.TextProperty, "Name");
 
-			var station = new TextCell {
+			var station = new RightDisclosureCell {
 				BindingContext = viewModel,
 				Text = "Station"
 			};
@@ -51,7 +51,7 @@ namespace InterClock.Connect.Data.Pages
 				station.Detail = stationSelected.StreamUrl;
 			});
 
-			TimePicker timePicker = new TimePicker () {
+			PickerCell timePicker = new PickerCell () {
 				Time = new TimeSpan (17, 30, 0),
 				HorizontalOptions = LayoutOptions.CenterAndExpand,
 				VerticalOptions = LayoutOptions.Fill,
@@ -60,7 +60,7 @@ namespace InterClock.Connect.Data.Pages
 
 			timePicker.SetBinding (TimePicker.TimeProperty, "AlarmSpan");
 
-			var beginDay = new TextCell {
+			var beginDay = new RightDisclosureCell {
 				BindingContext = viewModel,
 				Text = "Select Start Day..."
 			};
@@ -70,7 +70,7 @@ namespace InterClock.Connect.Data.Pages
 				await Navigation.PushAsync(new AlarmScheduleSelection(false));
 			};
 
-			var endDay = new TextCell {
+			var endDay = new RightDisclosureCell {
 				BindingContext = viewModel,
 				Text = "Select End Day..."
 			};
@@ -109,22 +109,25 @@ namespace InterClock.Connect.Data.Pages
 						name,
 						station,
 						beginDay,
-						endDay
+						endDay,
+						new ViewCell {
+							View = timePicker
+						}
 					},
 				},
 				Intent = TableIntent.Form,
 				HorizontalOptions = LayoutOptions.CenterAndExpand,
 				VerticalOptions = LayoutOptions.Fill
 			};
-
-			Content = new StackLayout {
-				Children = {
-					tv, timePicker, 
-				},
-				Spacing = 10,
-				HorizontalOptions = LayoutOptions.FillAndExpand,
-				VerticalOptions = LayoutOptions.FillAndExpand
-			};
+			Content = tv;
+//			Content = new StackLayout {
+//				Children = {
+//					tv, timePicker, 
+//				},
+//				Spacing = 10,
+//				HorizontalOptions = LayoutOptions.FillAndExpand,
+//				VerticalOptions = LayoutOptions.FillAndExpand
+//			};
 		}
 	}
 }

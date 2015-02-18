@@ -24,21 +24,21 @@ namespace InterClock.Connect.Data.Repos
 		private const string StopPlay = "stop";
 		private const string StatusEndpoint = "status";
 		private const string ScheduleAlarmEndpoint = "schedule";
-		private const string CancelAlarmEndpoint = "schedule/cancel/{0}";
+		private const string CancelAlarmEndpoint = "schedule/{0}";
 
 		public ApiRepo ()
 		{
 			deviceInfo = DependencyService.Get<IDeviceProvider> ();
 		}
 
-		public async Task<ApiResult> Status(){
+		public async Task<AlarmResult> Status(){
 			using (var client = new HttpClient ()) {
 				client.BaseAddress = new Uri (ApiUrl);
 				var result = await client.GetAsync(StatusEndpoint);
 				if(result.IsSuccessStatusCode && result.StatusCode == System.Net.HttpStatusCode.OK){
 					//ok to process
 					var json = await result.Content.ReadAsStringAsync();
-					return JsonConvert.DeserializeObject<ApiResult> (json);
+					return JsonConvert.DeserializeObject<AlarmResult> (json);
 				}
 			}
 			return null;
@@ -62,19 +62,19 @@ namespace InterClock.Connect.Data.Repos
 		public async Task<Alarm> CreateAlarm(Alarm toSchedule){
 			using (var client = new HttpClient ()) {
 				client.BaseAddress = new Uri (ApiUrl);
-
-				var result = await client.PostAsync(ScheduleAlarmEndpoint,
+				var result = await client.PutAsync(ScheduleAlarmEndpoint,
 					new FormUrlEncodedContent(toSchedule.ToFormData()));
-
+					
 				if(result.IsSuccessStatusCode && result.StatusCode == System.Net.HttpStatusCode.OK){
 					//ok to process
 					var json = await result.Content.ReadAsStringAsync();
 					var respData = JsonConvert.DeserializeObject<AlarmResult> (json);
 					//set our object id to that which the server assigned.
-					toSchedule.Id = respData.Id;
+					toSchedule.Id = respData.AlarmId;
 
 					return toSchedule;
 				}
+				Debug.WriteLine ("Alarm set failed: " + result.ReasonPhrase);
 			}
 			return null;
 		}
