@@ -7,12 +7,12 @@ using InterClock.Connect.Data.Controls;
 
 namespace InterClock.Connect.Data.Pages
 {
-	public class AlarmEdit : ContentPage
+	public class AlarmEdit2 : ContentPage
 	{
 		private Alarm viewModel;
 		private ApiRepo api = new ApiRepo();
 
-		public AlarmEdit (Alarm vm = null)
+		public AlarmEdit2 (Alarm vm = null)
 		{
 			Title = "Alarm info";
 			viewModel = vm ?? new Alarm ();

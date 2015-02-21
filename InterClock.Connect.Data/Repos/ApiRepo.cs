@@ -15,7 +15,7 @@ namespace InterClock.Connect.Data.Repos
 {
 	public class ApiRepo
 	{
-		private const string ApiUrl = "http://127.0.0.1:3000/";
+		private const string ApiUrl = "http://10.0.1.7:3000/";
 		private IDeviceProvider deviceInfo;
 
 		private const string GetStationUrl = "station";
@@ -32,16 +32,25 @@ namespace InterClock.Connect.Data.Repos
 		}
 
 		public async Task<AlarmResult> Status(){
-			using (var client = new HttpClient ()) {
-				client.BaseAddress = new Uri (ApiUrl);
-				var result = await client.GetAsync(StatusEndpoint);
-				if(result.IsSuccessStatusCode && result.StatusCode == System.Net.HttpStatusCode.OK){
-					//ok to process
-					var json = await result.Content.ReadAsStringAsync();
-					return JsonConvert.DeserializeObject<AlarmResult> (json);
+			var status = new AlarmResult ();
+
+			try{
+				using (var client = new HttpClient ()) {
+					client.BaseAddress = new Uri (ApiUrl);
+					var result = await client.GetAsync(StatusEndpoint);
+					if (result.IsSuccessStatusCode && result.StatusCode == System.Net.HttpStatusCode.OK) {
+						//ok to process
+						var json = await result.Content.ReadAsStringAsync ();
+						status = JsonConvert.DeserializeObject<AlarmResult> (json);
+					}
 				}
 			}
-			return null;
+			catch(Exception ex){
+				status.Message = "Could not connect to the server.";
+				Debug.WriteLineIf (ex != null, ex.Message);
+			}
+
+			return status;
 		}
 
 		public async Task<ApiResult> CancelAlarm(Guid toCancel){
@@ -70,7 +79,7 @@ namespace InterClock.Connect.Data.Repos
 					var json = await result.Content.ReadAsStringAsync();
 					var respData = JsonConvert.DeserializeObject<AlarmResult> (json);
 					//set our object id to that which the server assigned.
-					toSchedule.Id = respData.AlarmId;
+					toSchedule.Id = respData.Results.AlarmId;
 
 					return toSchedule;
 				}

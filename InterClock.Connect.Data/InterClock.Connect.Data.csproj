@@ -41,14 +41,29 @@
     <Compile Include="Models\SearchParams.cs" />
     <Compile Include="Models\Alarm.cs" />
     <Compile Include="Models\AlarmSchedule.cs" />
-    <Compile Include="Models\AlarmResult.cs" />
     <Compile Include="Pages\AlarmList.cs" />
     <Compile Include="Pages\AlarmEdit.cs" />
     <Compile Include="Pages\StationSearch.cs" />
-    <Compile Include="Models\Extensions.cs" />
     <Compile Include="Pages\AlarmScheduleSelection.cs" />
     <Compile Include="Controls\RightDisclosureCell.cs" />
     <Compile Include="Controls\PickerCell.cs" />
+    <Compile Include="Pages\AlarmEdit.xaml.cs">
+      <DependentUpon>AlarmEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\IMessenger.cs" />
+    <Compile Include="Pages\NavRoot.cs" />
+    <Compile Include="Pages\Root.cs" />
+    <Compile Include="ViewModels\AlarmStatusViewModel.cs" />
+    <Compile Include="Pages\AlarmStatus.xaml.cs">
+      <DependentUpon>AlarmStatus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\NotificationBase.cs" />
+    <Compile Include="Interfaces\IRebindable.cs" />
+    <Compile Include="Controls\CircularButton.cs" />
+    <Compile Include="Models\AlarmStatus.cs" />
+    <Compile Include="Models\AlarmResult.cs" />
+    <Compile Include="Misc\Extensions.cs" />
+    <Compile Include="Interfaces\ITranslator.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
@@ -87,6 +102,8 @@
     <Folder Include="Interfaces\" />
     <Folder Include="Pages\" />
     <Folder Include="Controls\" />
+    <Folder Include="ViewModels\" />
+    <Folder Include="Misc\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -97,4 +114,12 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\AlarmEdit.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\AlarmStatus.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>

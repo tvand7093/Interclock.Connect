@@ -22,7 +22,7 @@ namespace InterClock.Connect.iOS
 
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			
-			window.RootViewController = (new NavigationPage(new AlarmEdit())).CreateViewController ();
+			window.RootViewController = Root.Create().CreateViewController ();
 			window.MakeKeyAndVisible ();
 			
 			return true;

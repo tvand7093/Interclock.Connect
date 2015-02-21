@@ -3,17 +3,13 @@ using Newtonsoft.Json;
 
 namespace InterClock.Connect.Data.Models
 {
-	[JsonObject]
 	public class AlarmResult : ApiResult
 	{
+		public const int Running = 0;
+		public const int Inactive = -1;
+
 		[JsonProperty("result")]
-		public Guid AlarmId { get; set; }
-
-		[JsonProperty("name")]
-		public string Name {get;set;}
-
-		[JsonProperty("url")]
-		public string WebsiteUrl {get;set;}
+		public AlarmStatus Results { get; set; }
 
 		public AlarmResult ()
 		{

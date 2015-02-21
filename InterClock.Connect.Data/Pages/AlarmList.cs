@@ -22,6 +22,7 @@ namespace InterClock.Connect.Data.Pages
 		private ObservableCollection<Alarm> foundItems;
 		public AlarmList ()
 		{
+			Title = "TEST";
 			var status = new Label {
 				Text = "Checking status...",
 				HorizontalOptions = LayoutOptions.CenterAndExpand,
@@ -67,6 +68,7 @@ namespace InterClock.Connect.Data.Pages
 				Spacing = 10,
 				Padding = new Thickness(5, 20, 5, 0),
 				Children = {
+					status
 					//status, search, searchButton, stopButton, lv
 				}
 			};

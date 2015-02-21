@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+			 xmlns:sys="clr-namespace:System;assembly=System"
+			 x:Class="InterClock.Connect.Data.Pages.AlarmStatus"
+			 xmlns:vms="clr-namespace:InterClock.Connect.Data.ViewModels;assembly=InterClock.Connect.Data"
+			 xmlns:ctrls="clr-namespace:InterClock.Connect.Data.Controls;assembly=InterClock.Connect.Data"
+			 Title="Status">
+	<ContentPage.Content>
+		<StackLayout Padding="15">
+		    <StackLayout.BindingContext>
+        		<vms:AlarmStatusViewModel />
+        	</StackLayout.BindingContext>
+
+        	<StackLayout Orientation="Horizontal">
+        		<Label Text="Alarm Status:" 
+					HorizontalOptions="Fill" 
+					VerticalOptions="Fill" />
+
+				<Label Text="{Binding Status}" 
+					HorizontalOptions="FillAndExpand" 
+					VerticalOptions="Fill" />
+        	</StackLayout>
+
+        	<StackLayout VerticalOptions="CenterAndExpand" >
+				<Label Text="{Binding CurrentTime, StringFormat='{0:T}'}" HorizontalOptions="CenterAndExpand"
+					VerticalOptions="Fill" FontSize="40"/>
+				<Label Text="{Binding CurrentTime, StringFormat='{0:d}'}"
+				 	HorizontalOptions="CenterAndExpand"
+					VerticalOptions="FillAndExpand" FontSize="20"/>
+        	</StackLayout>
+					
+			<StackLayout Orientation="Horizontal" Padding="10">
+				<ctrls:CircularButton Text="Refresh" Command="{Binding RefreshCommand}"
+					TextColor="{Binding RefreshColor}" HorizontalOptions="CenterAndExpand"
+					 BorderColor="{Binding RefreshColor}" BackgroundColor="White" />
+
+				<ctrls:CircularButton Text="Off" Command="{Binding StopCommand}"
+					TextColor="{Binding OffColor}" IsEnabled="{Binding IsAlarmRunning}" 
+					HorizontalOptions="CenterAndExpand" BorderColor="{Binding OffColor}" BackgroundColor="White" />
+
+				<ctrls:CircularButton Text="Snooze" Command="{Binding SnoozeCommand}"
+					TextColor="{Binding SnoozeColor}" IsEnabled="{Binding IsAlarmRunning}" 
+					HorizontalOptions="CenterAndExpand" BorderColor="{Binding SnoozeColor}" BackgroundColor="White" />
+			</StackLayout>
+
+		</StackLayout>
+	</ContentPage.Content>
+</ContentPage>
