@@ -12,11 +12,10 @@ namespace InterClock.Connect.Data.Controls
 			BorderRadius = 32;
 
 			var gray = Color.FromHex ("#E8E8E8");
-			var previousColor = gray;
+			var previousColor = BorderColor;
 
 			PropertyChanging += (object sender, PropertyChangingEventArgs e) => {
 				if(e.PropertyName == "IsEnabled"){
-
 					//is enabled changed, so set border accordingly.
 					//is it about to disable?
 					if(IsEnabled){

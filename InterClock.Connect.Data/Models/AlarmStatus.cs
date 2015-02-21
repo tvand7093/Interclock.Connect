@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 namespace InterClock.Connect.Data.Models
 {
 	[JsonObject]
-	public class AlarmStatus : ApiResult
+	public class AlarmStatus
 	{
-		[JsonProperty("result")]
+		[JsonProperty("alarmId")]
 		public Guid AlarmId { get; set; }
 
 		[JsonProperty("name")]

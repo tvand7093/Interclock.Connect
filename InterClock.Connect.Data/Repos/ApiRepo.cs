@@ -77,10 +77,9 @@ namespace InterClock.Connect.Data.Repos
 				if(result.IsSuccessStatusCode && result.StatusCode == System.Net.HttpStatusCode.OK){
 					//ok to process
 					var json = await result.Content.ReadAsStringAsync();
-					var respData = JsonConvert.DeserializeObject<AlarmResult> (json);
+					var respData = JsonConvert.DeserializeObject<AlarmCreationResult> (json);
 					//set our object id to that which the server assigned.
-					toSchedule.Id = respData.Results.AlarmId;
-
+					toSchedule.Id = respData.Results;
 					return toSchedule;
 				}
 				Debug.WriteLine ("Alarm set failed: " + result.ReasonPhrase);

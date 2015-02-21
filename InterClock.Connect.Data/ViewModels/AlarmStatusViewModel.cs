@@ -47,6 +47,7 @@ namespace InterClock.Connect.Data.ViewModels
 		public ICommand StopCommand { protected set; get; }
 		public ICommand SnoozeCommand { protected set; get; }
 
+
 		public AlarmStatusViewModel ()
 		{
 			api = new ApiRepo ();
@@ -56,31 +57,60 @@ namespace InterClock.Connect.Data.ViewModels
 					CurrentTime = DateTime.Now;
 					return true;
 				});
+			api.CreateAlarm(new Alarm(){
+				StationId = 9876,
+				EndDay = AlarmSchedule.Saturday,
+				BeginDay = AlarmSchedule.Saturday,
+				Hour = DateTime.Now.Hour,
+				Minute = DateTime.Now.Minute + 1
+			});
 
+			AlarmResult currentAlarm = null;
 			this.RefreshCommand = new Command(async () =>
 				{
 					try{
 						Status = "Checking Status...".T();
 						var status = await api.Status();
+						currentAlarm = status;
 						Rebind(status);
 					}
 					catch(Exception){
-						Status = "Error fetching alarm status.".T();
+						Status = "Error fetching status.".T();
 						IsAlarmRunning = false;
 					}
 				});
 
-			this.SnoozeCommand = new Command (() => {
-				Status = "Sleeping for 5 min...".T();
+			DateTime.Now.DayOfWeek = DayOfWeek.Friday;
+
+			this.SnoozeCommand = new Command (async () => {
+				Status = "Sleeping for 1 min...".T();
+				await api.CancelAlarm(currentAlarm.Results.AlarmId);
+
+
+
+				var alarm = await api.CreateAlarm(new Alarm(){
+					StationId = 9876,
+					EndDay = AlarmSchedule.Saturday,
+					BeginDay = AlarmSchedule.Saturday, 
+					Hour = DateTime.Now.Hour,
+					Minute = DateTime.Now.Minute + 5
+								});
+				currentAlarm = new AlarmResult(){
+					Results = new AlarmStatus(){
+						AlarmId = alarm.Id
+					}
+				};
+
 				//snooze somehow
 			}, () => IsAlarmRunning);
 
 			this.StopCommand = new Command (async () => {
 				Status = "Turning off alarm".T();
 				try{
-					await api.Stop();
+					await api.CancelAlarm(currentAlarm.Results.AlarmId);
 					Status = "Alarm disabled".T();
 					IsAlarmRunning = false;
+					currentAlarm = null;
 				}
 				catch(Exception){
 					Status = "Error stopping alarm.".T();
