@@ -15,7 +15,7 @@ namespace InterClock.Connect.Data.Repos
 {
 	public class ApiRepo
 	{
-		private const string ApiUrl = "http://10.0.1.7:3000/";
+		private const string ApiUrl = "http://10.0.1.100:3000/";
 		private IDeviceProvider deviceInfo;
 
 		private const string GetStationUrl = "station";

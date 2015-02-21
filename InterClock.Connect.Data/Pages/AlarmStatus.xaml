@@ -13,7 +13,7 @@
         	</StackLayout.BindingContext>
 
         	<StackLayout Orientation="Horizontal">
-        		<Label Text="Alarm Status:" 
+        		<Label Text="Status:" 
 					HorizontalOptions="Fill" 
 					VerticalOptions="Fill" />
 

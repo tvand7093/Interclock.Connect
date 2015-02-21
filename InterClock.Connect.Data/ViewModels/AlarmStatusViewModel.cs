@@ -79,9 +79,7 @@ namespace InterClock.Connect.Data.ViewModels
 						IsAlarmRunning = false;
 					}
 				});
-
-			DateTime.Now.DayOfWeek = DayOfWeek.Friday;
-
+					
 			this.SnoozeCommand = new Command (async () => {
 				Status = "Sleeping for 1 min...".T();
 				await api.CancelAlarm(currentAlarm.Results.AlarmId);
