@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace InterClock.Connect.Data.ViewModels
 {
-	public class AlarmStatusViewModel : NotificationBase, IRebindable<AlarmResult>
+	internal class AlarmStatusViewModel : BaseViewModel, IRebindable<AlarmResult>
 	{
 		private ApiRepo api;
 
@@ -57,13 +57,13 @@ namespace InterClock.Connect.Data.ViewModels
 					CurrentTime = DateTime.Now;
 					return true;
 				});
-			api.CreateAlarm(new Alarm(){
-				StationId = 9876,
-				EndDay = AlarmSchedule.Saturday,
-				BeginDay = AlarmSchedule.Saturday,
-				Hour = DateTime.Now.Hour,
-				Minute = DateTime.Now.Minute + 1
-			});
+//			api.CreateAlarm(new Alarm(){
+//				StationId = 9876,
+//				EndDay = (AlarmSchedule)DateTime.Now.DayOfWeek,
+//				BeginDay = (AlarmSchedule)DateTime.Now.DayOfWeek,
+//				Hour = DateTime.Now.Hour,
+//				Minute = DateTime.Now.Minute + 1
+//			});
 
 			AlarmResult currentAlarm = null;
 			this.RefreshCommand = new Command(async () =>
@@ -84,12 +84,10 @@ namespace InterClock.Connect.Data.ViewModels
 				Status = "Sleeping for 1 min...".T();
 				await api.CancelAlarm(currentAlarm.Results.AlarmId);
 
-
-
 				var alarm = await api.CreateAlarm(new Alarm(){
 					StationId = 9876,
-					EndDay = AlarmSchedule.Saturday,
-					BeginDay = AlarmSchedule.Saturday, 
+					EndDay = (AlarmSchedule)DateTime.Now.DayOfWeek,
+					BeginDay = (AlarmSchedule)DateTime.Now.DayOfWeek, 
 					Hour = DateTime.Now.Hour,
 					Minute = DateTime.Now.Minute + 5
 								});

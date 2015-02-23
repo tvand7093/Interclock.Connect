@@ -11,7 +11,10 @@ namespace InterClock.Connect.Data.Models
 			translator = DependencyService.Get<ITranslator> ();
 		}
 
-		public static void AddRange(this IList list, IEnumerable data){
+		public static void AddRange(this IList list, IEnumerable data, bool clearData = false){
+			if (clearData)
+				list.Clear ();
+
 			foreach (var item in data) {
 				list.Add (item);
 			}

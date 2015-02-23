@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace InterClock.Connect.Data.Models
 {
-	public class AlarmResult : ApiResult
+	internal class AlarmResult : ApiResult
 	{
 		public const int Running = 0;
 		public const int Inactive = -1;

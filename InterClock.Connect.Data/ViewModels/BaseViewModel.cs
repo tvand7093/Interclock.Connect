@@ -1,10 +1,15 @@
 ﻿using System;
 using System.ComponentModel;
+using Xamarin.Forms;
 
 namespace InterClock.Connect.Data.ViewModels
 {
-	public abstract class NotificationBase : INotifyPropertyChanged
+	public abstract class BaseViewModel : INotifyPropertyChanged
 	{
+		public bool IsBusy {
+			get { return Application.Current.MainPage.IsBusy; }
+			set { Application.Current.MainPage.IsBusy = value; }
+		}
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		protected virtual void OnPropertyChanged(string propertyName)

@@ -12,7 +12,8 @@ namespace InterClock.Connect.Data.Models
 		Friday = 5,
 		Saturday = 6,
 		Weekdays = 7,
-		Weekends = 8
+		Weekends = 8,
+		NotSpecified = -1
 	}
 }
 

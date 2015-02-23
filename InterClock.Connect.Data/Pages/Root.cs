@@ -9,7 +9,7 @@ namespace InterClock.Connect.Data.Pages
 		public Root ()
 		{
 			Children.Add (new NavRoot(new AlarmStatus ()));
-			Children.Add (new NavRoot(new AlarmList ()));
+			Children.Add (new NavRoot(new AlarmEdit ()));
 		}
 		public static Root Create(){
 			return new Root ();

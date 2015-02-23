@@ -1,5 +1,30 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="InterClock.Connect.Data.Pages.AlarmEdit">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+	 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	 x:Class="InterClock.Connect.Data.Pages.AlarmEdit"
+	 Title="Alarm Info"
+	 xmlns:vms="clr-namespace:InterClock.Connect.Data.ViewModels;assembly=InterClock.Connect.Data">
+	<ContentPage.BindingContext>
+		<vms:AlarmEditViewModel />
+	</ContentPage.BindingContext>
+	<ContentPage.ToolbarItems>
+		<ToolbarItem Text="Save" Command="{Binding SaveCommand}" />
+	</ContentPage.ToolbarItems>
 	<ContentPage.Content>
+		<TableView Intent="Form">
+			<TableRoot>
+				<TableSection Title="Info">
+					<EntryCell Text="{Binding Name}" />
+					<TextCell Text="{Binding StationName}" Command="{Binding SelectStationCommand}"
+					 	CommandParameter="begin" />
+					<TextCell Text="{Binding BeginDay, Path=Name}" Command="{Binding SelectScheduleCommand}"
+					 	CommandParameter="end" />
+					<TextCell Text="{Binding EndDay, Path=Name}" Command="{Binding SelectScheduleCommand}" />
+					<ViewCell>
+						<TimePicker Time="{Binding AlarmTime}"/>
+					</ViewCell>
+				</TableSection>
+			</TableRoot>
+		</TableView>
 	</ContentPage.Content>
 </ContentPage>

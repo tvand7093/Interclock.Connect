@@ -8,24 +8,20 @@ using MonoTouch.UIKit;
 using Xamarin.Forms;
 using InterClock.Connect.Data;
 using InterClock.Connect.Data.Pages;
+using Xamarin.Forms.Platform.iOS;
 
 namespace InterClock.Connect.iOS
 {
 	[Register ("AppDelegate")]
-	public partial class AppDelegate : UIApplicationDelegate
+	public partial class AppDelegate : FormsApplicationDelegate
 	{
-		UIWindow window;
-
 		public override bool FinishedLaunching (UIApplication app, NSDictionary options)
 		{
 			Forms.Init ();
 
-			window = new UIWindow (UIScreen.MainScreen.Bounds);
+			LoadApplication (new App());
 			
-			window.RootViewController = Root.Create().CreateViewController ();
-			window.MakeKeyAndVisible ();
-			
-			return true;
+			return base.FinishedLaunching (app, options);;
 		}
 
 

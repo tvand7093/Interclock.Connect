@@ -13,7 +13,7 @@ using System.Collections.Generic;
 
 namespace InterClock.Connect.Data.Repos
 {
-	public class ApiRepo
+	internal sealed class ApiRepo
 	{
 		private const string ApiUrl = "http://10.0.1.100:3000/";
 		private IDeviceProvider deviceInfo;
@@ -105,21 +105,16 @@ namespace InterClock.Connect.Data.Repos
 			return null;
 		}
 
-		public async Task<ApiResult> Stop(){
-			using (var client = new HttpClient ()) {
-				client.BaseAddress = new Uri (ApiUrl);
-				var data = new List<KeyValuePair<string, string>> {
-					new KeyValuePair<string, string>("deviceId", deviceInfo.DeviceId),
-				};
-
-				var result = await client.PostAsync(StopPlay, new FormUrlEncodedContent(data));
-				if(result.IsSuccessStatusCode && result.StatusCode == System.Net.HttpStatusCode.OK){
-					//ok to process
-					var json = await result.Content.ReadAsStringAsync();
-					return JsonConvert.DeserializeObject<ApiResult> (json);
-				}
-			}
+		public async Task<AlarmResult> Snooze(Guid currentAlarm, int stationId) {
+			throw new NotImplementedException ();
+			await CancelAlarm (currentAlarm);
 			return null;
+//			var newAlarm = new Alarm () {
+//				Hour = 
+//				BeginDay = (AlarmSchedule)DateTime.Now.DayOfWeek,
+//				EndDay = (AlarmSchedule)DateTime.Now.DayOfWeek,
+//				StationId = stationId,
+//			};
 		}
 
 		public async Task<ApiResult> Play(int stationId){

@@ -5,6 +5,7 @@ namespace InterClock.Connect.Data.Controls
 {
 	public class CircularButton : Button
 	{
+
 		public CircularButton ()
 		{
 			BorderWidth = 1;
