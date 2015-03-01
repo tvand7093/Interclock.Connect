@@ -8,6 +8,8 @@ namespace InterClock.Connect.Data.ViewModels
 {
 	public class AlarmScheduleViewModel : BaseViewModel
 	{
+		private INavigation navigation;
+
 		private AlarmScheduleInfo schedule;
 		public AlarmScheduleInfo Schedule {
 			get { return schedule; }
@@ -15,8 +17,7 @@ namespace InterClock.Connect.Data.ViewModels
 				schedule = value;
 				OnPropertyChanged ("Schedule");
 				//MessagingCenter.Send (schedule, "ScheduleSelected");
-				var tab = (App.Current.MainPage as Root).CurrentPage;
-				tab.Navigation.PopAsync ();
+				navigation.PopAsync ();
 			}
 		}
 
@@ -32,6 +33,7 @@ namespace InterClock.Connect.Data.ViewModels
 
 		public AlarmScheduleViewModel ()
 		{
+			navigation = (App.Current.MainPage as Root).CurrentPage.Navigation;
 			Schedule = new AlarmScheduleInfo(AlarmSchedule.NotSpecified);
 			days = new ObservableCollection<AlarmScheduleInfo> () {
 					new AlarmScheduleInfo(AlarmSchedule.Monday),

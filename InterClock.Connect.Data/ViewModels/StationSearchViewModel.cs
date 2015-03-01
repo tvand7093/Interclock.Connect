@@ -61,11 +61,9 @@ namespace InterClock.Connect.Data.ViewModels
 			stations = new ObservableCollection<StationInfo> ();
 			selectedStation = new StationInfo ();
 			SearchCommand = new Command (async () => {
-				var api = new ApiRepo ();
-
 				IsSearching = true;
-				var results = await api.Search(SearchText);
-				Stations.AddRange(results.Results, true);
+				var results = await ApiService.Search(SearchText);
+				Stations.AddRange(results.Payload, true);
 				IsSearching = false;
 			}, () => CanSearch);
 		}

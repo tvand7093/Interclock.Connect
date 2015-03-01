@@ -12,15 +12,6 @@ namespace InterClock.Connect.Data.ViewModels
 	{
 		private Alarm alarm;
 
-		public string Name{
-			get { return alarm.Name; }
-			set {
-				alarm.Name = value;
-				OnPropertyChanged ("Name");
-				OnPropertyChanged ("CanSave");
-			}
-		}
-
 		public AlarmScheduleInfo BeginDay {
 			get { return new AlarmScheduleInfo(alarm.BeginDay); }
 			set {
@@ -68,7 +59,7 @@ namespace InterClock.Connect.Data.ViewModels
 		public bool CanSave {
 			get {
 				return Station != null && EndDay.Schedule != AlarmSchedule.NotSpecified
-				&& BeginDay.Schedule != AlarmSchedule.NotSpecified && !String.IsNullOrEmpty (Name);
+				&& BeginDay.Schedule != AlarmSchedule.NotSpecified;
 			}
 		}
 		private bool isBeginSchedule = false;
@@ -89,9 +80,7 @@ namespace InterClock.Connect.Data.ViewModels
 
 		public void Unsubscribe() {
 			MessagingCenter.Unsubscribe<StationInfo> (this, "StationSelected");
-			MessagingCenter.Unsubscribe<AlarmScheduleInfo> (this, "BeginScheduleSelected");
-			MessagingCenter.Unsubscribe<AlarmScheduleInfo> (this, "EndScheduleSelected");
-
+			MessagingCenter.Unsubscribe<AlarmScheduleInfo> (this, "ScheduleSelected");
 		}
 
 		public ICommand SelectStationCommand { get; private set; }
@@ -102,7 +91,6 @@ namespace InterClock.Connect.Data.ViewModels
 		{
 			alarm = new Alarm ();
 
-			var api = new ApiRepo ();
 //			api.CreateAlarm (new Alarm () {
 //				Hour = 7,
 //				Minute = 30,
@@ -123,10 +111,9 @@ namespace InterClock.Connect.Data.ViewModels
 				await tab.Navigation.PushAsync (new AlarmScheduleSelection ());
 			});
 			SaveCommand = new Command (async() => {
-				var api2 = new ApiRepo();
 				this.IsBusy = true;
-				var newAlarm = await api2.CreateAlarm(alarm);
-				alarm.Id = newAlarm.Id;
+				var newAlarm = await ApiService.CreateAlarm(alarm);
+				alarm.Id = newAlarm.Payload.Id;
 				this.IsBusy = false;
 			}, () => CanSave);
 		}

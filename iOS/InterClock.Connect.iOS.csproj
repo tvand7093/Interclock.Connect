@@ -107,7 +107,6 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Interop\DeviceProvider.cs" />
     <Compile Include="Interop\RightDisclosureCellRenderer.cs" />
     <Compile Include="Interop\PickerCellRenderer.cs" />
     <Compile Include="Interop\Translator.cs" />

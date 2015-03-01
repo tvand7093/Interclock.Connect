@@ -1,15 +1,13 @@
 ﻿using System;
 using Newtonsoft.Json;
+using InterClock.Connect.Data.Interfaces;
 
 namespace InterClock.Connect.Data.Models
 {
-	internal class AlarmResult : ApiResult
+	internal class AlarmResult : ApiResult, IStatus<Alarm>
 	{
-		public const int Running = 0;
-		public const int Inactive = -1;
-
 		[JsonProperty("result")]
-		public AlarmStatus Results { get; set; }
+		public Alarm Payload { get; set; }
 
 		public AlarmResult ()
 		{

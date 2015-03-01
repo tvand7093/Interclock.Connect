@@ -14,7 +14,6 @@ namespace InterClock.Connect.Data.Pages
 {
 	public class AlarmList : ContentPage
 	{
-		ApiRepo api = new ApiRepo();
 		public static AlarmList Create(){
 			return new AlarmList ();
 		}
@@ -29,7 +28,7 @@ namespace InterClock.Connect.Data.Pages
 				VerticalOptions = LayoutOptions.Start,
 			};
 
-			api.Status ().ContinueWith ((t) => {
+			ApiService.FetchStatus ().ContinueWith ((t) => {
 				status.Text = t.Result.Message;
 			}, TaskScheduler.FromCurrentSynchronizationContext());
 
@@ -49,14 +48,13 @@ namespace InterClock.Connect.Data.Pages
 				var station = lv.SelectedItem as Alarm;
 
 				//var playResult = await api.Play(station.Id);
-				await api.CreateAlarm(
+				await ApiService.CreateAlarm(
 					new Alarm(){
 						//StationId = station.Id,
-						Name = "Radio Due @ 1:27am",
-						BeginDay = AlarmSchedule.Tuesday,
-						EndDay = AlarmSchedule.Tuesday,
-						Hour = 3,
-						Minute = 6
+//						BeginDay = AlarmSchedule.Tuesday,
+//						EndDay = AlarmSchedule.Tuesday,
+//						Hour = 3,
+//						Minute = 6
 					});
 				status.Text = "Created Alarm";
 				(sender as ListView).SelectedItem = null;

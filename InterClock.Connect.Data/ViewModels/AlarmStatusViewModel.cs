@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace InterClock.Connect.Data.ViewModels
 {
-	internal class AlarmStatusViewModel : BaseViewModel, IRebindable<AlarmResult>
+	internal class AlarmStatusViewModel : BaseViewModel
 	{
-		private ApiRepo api;
-
 		private string status;
 		public string Status {
 			get { return status; }
@@ -30,13 +28,8 @@ namespace InterClock.Connect.Data.ViewModels
 			}
 		}
 
-		private bool alarmRunning;
 		public bool IsAlarmRunning {
-			get { return alarmRunning; }
-			set {
-				alarmRunning = value;
-				OnPropertyChanged ("IsAlarmRunning");
-			}
+			get { return CurrentAlarm == null ? false : CurrentAlarm.IsRunning; }
 		}
 
 		public Color OffColor { get { return Color.FromHex("#D62F37"); } }
@@ -47,80 +40,64 @@ namespace InterClock.Connect.Data.ViewModels
 		public ICommand StopCommand { protected set; get; }
 		public ICommand SnoozeCommand { protected set; get; }
 
+		private Alarm alarm;
+		private Alarm CurrentAlarm {
+			get { return alarm; }
+			set {
+				alarm = value;
+				OnPropertyChanged ("IsAlarmRunning");
+			}
+		} 
+
+		private void SetupCommands(){
+			Action fetchStatus = async () => {
+				Status = "Checking Status...".T();
+				var status = await ApiService.FetchStatus();
+				CurrentAlarm = status.Payload;
+				Status = status.Message;
+				this.OnPropertyChanged("IsAlarmRunning");
+			};
+
+			Action turnOff = async () => {
+				if(!CurrentAlarm.IsSnoozing){
+					//only allow turning off if not snoozing.
+					Status = "Turning off alarm".T();
+					try{
+						await ApiService.CancelAlarm(CurrentAlarm.Id);
+						Status = "Alarm disabled".T();
+						CurrentAlarm = null;
+					}
+					catch(Exception){
+						Status = "Error stopping alarm.".T();
+					}
+
+					OnPropertyChanged("IsAlarmRunning");
+				}
+			};
+
+			Action enableSnooze = async () => {
+				if (!CurrentAlarm.IsSnoozing && CurrentAlarm.IsRunning) {
+					Status = "Sleeping for 5 min...".T ();
+					var response = await ApiService.Snooze();
+					CurrentAlarm = response.Payload;
+				}
+			};
+
+			this.RefreshCommand = new Command(fetchStatus);
+			this.SnoozeCommand = new Command (enableSnooze, () => IsAlarmRunning);
+			this.StopCommand = new Command (turnOff, () => IsAlarmRunning);
+		}
 
 		public AlarmStatusViewModel ()
 		{
-			api = new ApiRepo ();
-
 			Device.StartTimer(TimeSpan.FromSeconds(1), () =>
 				{
 					CurrentTime = DateTime.Now;
 					return true;
 				});
-//			api.CreateAlarm(new Alarm(){
-//				StationId = 9876,
-//				EndDay = (AlarmSchedule)DateTime.Now.DayOfWeek,
-//				BeginDay = (AlarmSchedule)DateTime.Now.DayOfWeek,
-//				Hour = DateTime.Now.Hour,
-//				Minute = DateTime.Now.Minute + 1
-//			});
 
-			AlarmResult currentAlarm = null;
-			this.RefreshCommand = new Command(async () =>
-				{
-					try{
-						Status = "Checking Status...".T();
-						var status = await api.Status();
-						currentAlarm = status;
-						Rebind(status);
-					}
-					catch(Exception){
-						Status = "Error fetching status.".T();
-						IsAlarmRunning = false;
-					}
-				});
-					
-			this.SnoozeCommand = new Command (async () => {
-				Status = "Sleeping for 1 min...".T();
-				await api.CancelAlarm(currentAlarm.Results.AlarmId);
-
-				var alarm = await api.CreateAlarm(new Alarm(){
-					StationId = 9876,
-					EndDay = (AlarmSchedule)DateTime.Now.DayOfWeek,
-					BeginDay = (AlarmSchedule)DateTime.Now.DayOfWeek, 
-					Hour = DateTime.Now.Hour,
-					Minute = DateTime.Now.Minute + 5
-								});
-				currentAlarm = new AlarmResult(){
-					Results = new AlarmStatus(){
-						AlarmId = alarm.Id
-					}
-				};
-
-				//snooze somehow
-			}, () => IsAlarmRunning);
-
-			this.StopCommand = new Command (async () => {
-				Status = "Turning off alarm".T();
-				try{
-					await api.CancelAlarm(currentAlarm.Results.AlarmId);
-					Status = "Alarm disabled".T();
-					IsAlarmRunning = false;
-					currentAlarm = null;
-				}
-				catch(Exception){
-					Status = "Error stopping alarm.".T();
-					IsAlarmRunning = true;
-				}
-			}, () => IsAlarmRunning);
-
+			SetupCommands ();
 			RefreshCommand.Execute (this);
-		}
-
-		public void Rebind (AlarmResult toBind)
-		{
-			Status = toBind.Message;
-			IsAlarmRunning = toBind.Code == AlarmResult.Running;
 		}
 	}
 }

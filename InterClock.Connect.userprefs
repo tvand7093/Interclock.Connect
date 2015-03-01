@@ -1,16 +1,6 @@
 ﻿<Properties StartupItem="iOS/InterClock.Connect.iOS.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhone" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneDeviceTarget.iPhone di Tyler Vanderhoef" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="InterClock.Connect.Data/Repos/ApiRepo.cs">
-    <Files>
-      <File FileName="InterClock.Connect.Data/Pages/AlarmEdit.xaml" Line="1" Column="1" />
-      <File FileName="InterClock.Connect.Data/Repos/ApiRepo.cs" Line="1" Column="1" />
-      <File FileName="InterClock.Connect.Data/Models/AlarmCreationResult.cs" Line="1" Column="1" />
-      <File FileName="InterClock.Connect.Data/Controls/CircularButton.cs" Line="1" Column="1" />
-      <File FileName="InterClock.Connect.Data/ViewModels/AlarmStatusViewModel.cs" Line="33" Column="33" />
-      <File FileName="InterClock.Connect.Data/Models/AlarmSchedule.cs" Line="3" Column="3" />
-      <File FileName="InterClock.Connect.Data/Pages/AlarmStatus.xaml" Line="1" Column="1" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|iPhoneSimulator" PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.IPhone4s.8.1" />
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/tylervanderhoef/Documents/Github/Personal/Interclock.Connect/InterClock.Connect.Data/Controls/EnumPicker.cs" line="10" column="1" />

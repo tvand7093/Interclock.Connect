@@ -5,7 +5,6 @@ namespace InterClock.Connect.Data.Controls
 {
 	public class CircularButton : Button
 	{
-
 		public CircularButton ()
 		{
 			BorderWidth = 1;
@@ -13,20 +12,28 @@ namespace InterClock.Connect.Data.Controls
 			BorderRadius = 32;
 
 			var gray = Color.FromHex ("#E8E8E8");
-			var previousColor = BorderColor;
+			Color enabledBorderColor = Color.Default;
+			Color enabledTextColor = Color.Default;
 
-			PropertyChanging += (object sender, PropertyChangingEventArgs e) => {
+			PropertyChanged += (object sender, System.ComponentModel.PropertyChangedEventArgs e) => {
 				if(e.PropertyName == "IsEnabled"){
-					//is enabled changed, so set border accordingly.
-					//is it about to disable?
+					//is it enabled?
 					if(IsEnabled){
-						//disabling, so set to gray
-						previousColor = BorderColor;
-						BorderColor = gray;
+						//enabled
+						BorderColor = enabledBorderColor;
+						TextColor = enabledTextColor;
 					}
 					else{
-						BorderColor = previousColor;
+						BorderColor = gray;
+						TextColor = gray;
 					}
+				}
+			};
+
+			PropertyChanging += (object sender, PropertyChangingEventArgs e) => {
+				if(e.PropertyName == "IsEnabled" && enabledTextColor == Color.Default){
+					enabledBorderColor = BorderColor;
+					enabledTextColor = TextColor;
 				}
 			};
 		}
