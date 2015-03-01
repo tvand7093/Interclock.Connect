@@ -2,9 +2,9 @@
 
 namespace InterClock.Connect.Data.Interfaces
 {
-	internal interface IStatus
+	public interface IPayload<T> where T : class
 	{
-		string Message {get;set;}
+		T Payload {get;set;}
 	}
 }
 

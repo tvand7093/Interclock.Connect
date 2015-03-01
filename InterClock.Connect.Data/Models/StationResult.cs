@@ -6,7 +6,7 @@ using InterClock.Connect.Data.Interfaces;
 namespace InterClock.Connect.Data.Models
 {
 	[JsonObject]
-	public class StationResult : ApiResult, IStatus<Station>
+	public class StationResult : ApiResult, IPayload<Station>
 	{
 		[JsonProperty("result")]
 		public Station Payload { get; set; }

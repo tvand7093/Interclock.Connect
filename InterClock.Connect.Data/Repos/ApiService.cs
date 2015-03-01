@@ -19,7 +19,7 @@ namespace InterClock.Connect.Data.Repos
 		private const string GetStationUrl = "station";
 		private const string PlayEndpoint = "play";
 		private const string SearchEndpoint = "search";
-		private const string StopPlay = "stop";
+		private const string StopEndpoint = "stop";
 		private const string StatusEndpoint = "status";
 		private const string ScheduleAlarmEndpoint = "schedule";
 		private const string CancelAlarmEndpoint = "schedule/{0}";
@@ -27,7 +27,7 @@ namespace InterClock.Connect.Data.Repos
 
 		private static async Task<T> SendData<T, K> (string endpoint, HttpMethod method,
 			IEnumerable<KeyValuePair<string, string>> content = null)
-			where T : class, IStatus<K>, new()
+			where T : class, IDataResult<K>, new()
 			where K : class, new() {
 			//create default for result
 			var status = new T ();
@@ -37,6 +37,8 @@ namespace InterClock.Connect.Data.Repos
 				//create REST client
 				client = new HttpClient();
 				client.BaseAddress = new Uri (ApiUrl);
+				//set time out to just 5 seconds
+				client.Timeout = new TimeSpan(0, 0, 5);
 				HttpResponseMessage result = null;
 
 				FormUrlEncodedContent data = null;
@@ -68,16 +70,13 @@ namespace InterClock.Connect.Data.Repos
 				}
 
 			}
-			catch(AggregateException exs){
-				status.Message = "Errors occurred";
+			catch(AggregateException){
+				status.Message = "Multiple errors occurred.";
 			}
-			catch(TimeoutException ex){
+			catch(TimeoutException){
 				status.Message = "Could not connect to the server.";
 			}
-			catch(HttpRequestException ex){
-				status.Message = ex.Message;
-			}
-			catch(Exception ex){
+			catch(Exception){
 				status.Message = "An error occurred.";
 			}
 			finally {
@@ -92,9 +91,13 @@ namespace InterClock.Connect.Data.Repos
 			return SendData<AlarmResult, Alarm> (StatusEndpoint, HttpMethod.Get);
 		}
 
-		public static Task<AlarmResult> CancelAlarm(Guid toCancel){
+		public static Task<AlarmResult> DeleteAlarm(Guid toCancel){
 			var deleteEndpoint = string.Format (CancelAlarmEndpoint, toCancel.ToString ());
 			return SendData<AlarmResult, Alarm> (deleteEndpoint, HttpMethod.Delete);
+		}
+
+		public static Task<AlarmResult> StopAlarm(){
+			return SendData<AlarmResult, Alarm> (StopEndpoint, HttpMethod.Put);
 		}
 
 		public static Task<AlarmResult> CreateAlarm(Alarm toSchedule){

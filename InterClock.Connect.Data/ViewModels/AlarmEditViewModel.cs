@@ -62,8 +62,17 @@ namespace InterClock.Connect.Data.ViewModels
 				&& BeginDay.Schedule != AlarmSchedule.NotSpecified;
 			}
 		}
+
 		private bool isBeginSchedule = false;
 		public void Subscribe() {
+			MessagingCenter.Subscribe<Alarm> (this, "AlarmStatus", (alarm) => {
+				if(alarm != null){
+					this.alarm.Copy(alarm);
+				}
+				else{
+					this.alarm = new Alarm();
+				}
+			});
 			MessagingCenter.Subscribe<StationInfo> (this, "StationSelected", (station) => {
 				Station = station;
 			});
@@ -79,6 +88,7 @@ namespace InterClock.Connect.Data.ViewModels
 		}
 
 		public void Unsubscribe() {
+			MessagingCenter.Unsubscribe<StationInfo> (this, "AlarmStatus");
 			MessagingCenter.Unsubscribe<StationInfo> (this, "StationSelected");
 			MessagingCenter.Unsubscribe<AlarmScheduleInfo> (this, "ScheduleSelected");
 		}
@@ -89,16 +99,7 @@ namespace InterClock.Connect.Data.ViewModels
 
 		public AlarmEditViewModel ()
 		{
-			alarm = new Alarm ();
-
-//			api.CreateAlarm (new Alarm () {
-//				Hour = 7,
-//				Minute = 30,
-//				StationId = 9876,
-//				EndDay = AlarmSchedule.Weekdays,
-//				BeginDay = AlarmSchedule.Weekdays
-//			});
-
+			this.alarm = new Alarm ();
 			SelectStationCommand = new Command (async () => {
 				var tab = (App.Current.MainPage as Root).CurrentPage;
 				await tab.Navigation.PushAsync (new StationSearch ());

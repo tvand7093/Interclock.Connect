@@ -19,15 +19,6 @@ namespace InterClock.Connect.Data.ViewModels
 			}
 		}
 
-		private DateTime currentTime;
-		public DateTime CurrentTime {
-			get { return currentTime; }
-			set {
-				currentTime = value;
-				OnPropertyChanged ("CurrentTime");
-			}
-		}
-
 		public bool IsAlarmRunning {
 			get { return CurrentAlarm == null ? false : CurrentAlarm.IsRunning; }
 		}
@@ -49,55 +40,69 @@ namespace InterClock.Connect.Data.ViewModels
 			}
 		} 
 
+		private async void MakeApiCall<T,R>(string beginMessage,
+			Func<Task<T>> apiCall, Action<R> success)
+			where T : IDataResult<R>
+			where  R : class{
+
+			Status = beginMessage.T();
+			IsBusy = true;
+			var apiResult = await apiCall ();
+			Status = apiResult.Message.T ();
+			IsBusy = false;
+			success (apiResult.Payload);
+		}
+
 		private void SetupCommands(){
-			Action fetchStatus = async () => {
-				Status = "Checking Status...".T();
-				var status = await ApiService.FetchStatus();
-				CurrentAlarm = status.Payload;
-				Status = status.Message;
-				this.OnPropertyChanged("IsAlarmRunning");
+			Action fetchStatus = () => {
+				MakeApiCall<AlarmResult, Alarm>("Checking status...", 
+					() => ApiService.FetchStatus(),
+					(data) => {
+						if(data != null) {
+							CurrentAlarm = data;
+							MessagingCenter.Send(CurrentAlarm, "AlarmStatus");
+							this.OnPropertyChanged("IsAlarmRunning");
+						}
+					});
 			};
 
-			Action turnOff = async () => {
+			Action turnOff = () => {
 				if(!CurrentAlarm.IsSnoozing){
-					//only allow turning off if not snoozing.
-					Status = "Turning off alarm".T();
-					try{
-						await ApiService.CancelAlarm(CurrentAlarm.Id);
-						Status = "Alarm disabled".T();
-						CurrentAlarm = null;
-					}
-					catch(Exception){
-						Status = "Error stopping alarm.".T();
-					}
-
-					OnPropertyChanged("IsAlarmRunning");
+					MakeApiCall<AlarmResult, Alarm>("Turning off alarm.",
+						() => ApiService.StopAlarm(),
+						(alarm) => {
+							CurrentAlarm = alarm;
+							OnPropertyChanged("IsAlarmRunning");
+						});
 				}
 			};
 
-			Action enableSnooze = async () => {
+			Action enableSnooze = () => {
 				if (!CurrentAlarm.IsSnoozing && CurrentAlarm.IsRunning) {
-					Status = "Sleeping for 5 min...".T ();
-					var response = await ApiService.Snooze();
-					CurrentAlarm = response.Payload;
+					MakeApiCall<AlarmResult, Alarm>("Sleeping for 5 min.",
+						() => ApiService.Snooze(),
+						(alarm) => {
+							CurrentAlarm = alarm;
+							OnPropertyChanged("IsAlarmRunning");
+						});
 				}
 			};
 
 			this.RefreshCommand = new Command(fetchStatus);
-			this.SnoozeCommand = new Command (enableSnooze, () => IsAlarmRunning);
-			this.StopCommand = new Command (turnOff, () => IsAlarmRunning);
+			this.SnoozeCommand = new Command (enableSnooze);
+			this.StopCommand = new Command (turnOff);
 		}
 
 		public AlarmStatusViewModel ()
 		{
-			Device.StartTimer(TimeSpan.FromSeconds(1), () =>
-				{
-					CurrentTime = DateTime.Now;
-					return true;
-				});
-
 			SetupCommands ();
-			RefreshCommand.Execute (this);
+			//delay status check by 1 second to allow for init
+			Device.StartTimer(new TimeSpan(0, 0, 1),
+			() => {
+				RefreshCommand.Execute (this);
+				//don't re-execute
+				return false; 
+			});
 		}
 	}
 }

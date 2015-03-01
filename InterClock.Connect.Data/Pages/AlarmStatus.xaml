@@ -22,27 +22,23 @@
 					VerticalOptions="Fill" />
         	</StackLayout>
 
-        	<StackLayout VerticalOptions="CenterAndExpand" >
-				<Label Text="{Binding CurrentTime, StringFormat='{0:T}'}" HorizontalOptions="CenterAndExpand"
-					VerticalOptions="Fill" FontSize="40"/>
-				<Label Text="{Binding CurrentTime, StringFormat='{0:d}'}"
-				 	HorizontalOptions="CenterAndExpand"
-					VerticalOptions="FillAndExpand" FontSize="20"/>
-        	</StackLayout>
+        	<ctrls:ClockView ShowSeconds="true" VerticalOptions="FillAndExpand" />
 					
-			<StackLayout Orientation="Horizontal" Padding="10">
-				<ctrls:CircularButton Text="Refresh" Command="{Binding RefreshCommand}"
-					TextColor="{Binding RefreshColor}" HorizontalOptions="CenterAndExpand"
-					 BorderColor="{Binding RefreshColor}" BackgroundColor="White" />
+			<ctrls:CircularButtonsView 
+				LeftCommand="{Binding RefreshCommand}"
+				LeftColor="{Binding RefreshColor}"
+				LeftText="Refresh"
 
-				<ctrls:CircularButton Text="Off" Command="{Binding StopCommand}"
-					TextColor="{Binding OffColor}" IsEnabled="{Binding IsAlarmRunning}" 
-					HorizontalOptions="CenterAndExpand" BorderColor="{Binding OffColor}" BackgroundColor="White" />
+				CenterCommand="{Binding StopCommand}"
+				CenterColor="{Binding OffColor}"
+				CenterEnabled="{Binding IsAlarmRunning}"
+				CenterText="Off"
 
-				<ctrls:CircularButton Text="Snooze" Command="{Binding SnoozeCommand}"
-					TextColor="{Binding SnoozeColor}" IsEnabled="{Binding IsAlarmRunning}" 
-					HorizontalOptions="CenterAndExpand" BorderColor="{Binding SnoozeColor}" BackgroundColor="White" />
-			</StackLayout>
+				RightCommand="{Binding SnoozeCommand}"
+				RightColor="{Binding SnoozeColor}"
+				RightEnabled="{Binding IsAlarmRunning}"
+				RightText="Snooze"
+				/>
 
 		</StackLayout>
 	</ContentPage.Content>

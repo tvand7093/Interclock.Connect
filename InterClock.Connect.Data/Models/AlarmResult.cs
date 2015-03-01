@@ -4,7 +4,7 @@ using InterClock.Connect.Data.Interfaces;
 
 namespace InterClock.Connect.Data.Models
 {
-	internal class AlarmResult : ApiResult, IStatus<Alarm>
+	internal class AlarmResult : ApiResult, IDataResult<Alarm>
 	{
 		[JsonProperty("result")]
 		public Alarm Payload { get; set; }

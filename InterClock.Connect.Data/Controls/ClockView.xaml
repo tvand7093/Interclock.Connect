@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="InterClock.Connect.Data.Controls.ClockView">
+	<ContentView.Content>
+    	<StackLayout VerticalOptions="CenterAndExpand" >
+			<Label x:Name="TimeLabel" HorizontalOptions="CenterAndExpand"
+				VerticalOptions="Fill" FontSize="40"/>
+			<Label x:Name="DateLabel" HorizontalOptions="CenterAndExpand"
+				VerticalOptions="FillAndExpand" FontSize="20"/>
+    	</StackLayout>
+	</ContentView.Content>
+</ContentView>

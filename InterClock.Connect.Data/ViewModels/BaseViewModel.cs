@@ -1,6 +1,8 @@
 ﻿using System;
 using System.ComponentModel;
 using Xamarin.Forms;
+using System.Threading.Tasks;
+using InterClock.Connect.Data.Interfaces;
 
 namespace InterClock.Connect.Data.ViewModels
 {
@@ -8,8 +10,11 @@ namespace InterClock.Connect.Data.ViewModels
 	{
 		public bool IsBusy {
 			get { return Application.Current.MainPage.IsBusy; }
-			set { Application.Current.MainPage.IsBusy = value; }
+			set {
+				if(Application.Current.MainPage != null)
+					Application.Current.MainPage.IsBusy = value; }
 		}
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		protected virtual void OnPropertyChanged(string propertyName)

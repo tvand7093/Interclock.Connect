@@ -71,6 +71,14 @@
     <Compile Include="Models\AlarmScheduleInfo.cs" />
     <Compile Include="Interfaces\IStatus.cs" />
     <Compile Include="Repos\ApiService.cs" />
+    <Compile Include="Interfaces\IPayload.cs" />
+    <Compile Include="Interfaces\IDataResult.cs" />
+    <Compile Include="Controls\ClockView.xaml.cs">
+      <DependentUpon>ClockView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CircularButtonsView.xaml.cs">
+      <DependentUpon>CircularButtonsView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
@@ -132,6 +140,12 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\AlarmScheduleSelection.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\ClockView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CircularButtonsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
